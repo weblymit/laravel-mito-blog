@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TestController;
+use App\Http\Controllers\PostController;
 
-Route::get('/', [TestController::class, 'index']);
+Route::get('/', [PostController::class, 'index']);
+Route::resource('posts', PostController::class);
 
 // Route::get('/', function () {
 //   return view('pages.home');

@@ -17,7 +17,7 @@ class PostController extends Controller
   {
     // 1- Retrieve all post from models Post and saved in variable
     $posts = Post::all();
-    dd($posts);
+    // dd($posts);
     // 2- Send data to view
     return view('pages.home', compact('posts'));
   }
@@ -51,7 +51,7 @@ class PostController extends Controller
    */
   public function show(Post $post)
   {
-    //
+    return view('pages.show', compact('post'));
   }
 
   /**

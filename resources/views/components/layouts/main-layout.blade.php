@@ -12,7 +12,7 @@
 </head>
 
 <body>
-		{{-- <h1>Hello world</h1> --}}
+		@include('partials._session')
 		{{ $slot }}
 </body>
 

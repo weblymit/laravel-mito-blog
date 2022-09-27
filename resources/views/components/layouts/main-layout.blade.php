@@ -12,6 +12,7 @@
 </head>
 
 <body>
+		@include('partials.navbar._navbar')
 		@include('partials._session')
 		{{ $slot }}
 </body>

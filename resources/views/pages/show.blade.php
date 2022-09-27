@@ -3,9 +3,10 @@
 				<img alt="{{ $post->title }}" class="max-w-lg" src="{{ $post->url_img }}">
 				<div class="">
 						<p class="py-8 text-3xl font-black">{{ $post->title }}</p>
-						<p>{{ $post->content }}</p>
+						<p>{!! nl2br(e($post->content)) !!}</p>
 						<div class="pt-6">
 								<x-btn-delete :post="$post" />
+								<a class="btn-success btn" href="{{ $post->id }}/edit">Modifier</a>
 						</div>
 				</div>
 		</div>

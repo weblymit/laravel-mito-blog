@@ -68,6 +68,7 @@ module.exports = {
     // require("flowbite/plugin"),
     require("daisyui"),
     require("@tailwindcss/forms"),
+    require("tailwindcss-plugins/pagination"),
   ],
   // daisyUI config (optional)
   // daisyui: {

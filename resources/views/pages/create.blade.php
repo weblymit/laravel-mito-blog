@@ -1,7 +1,7 @@
 <x-layouts.main-layout title="Création article">
 		<div class="container pb-24">
 				<h1 class="pt-10 pb-10 text-4xl font-bold">New Post</h1>
-				<form action="{{ route('posts.store') }}" method="POST">
+				<form action="{{ route('posts.store') }}" enctype="multipart/form-data" method="POST">
 						@csrf
 						<div class="max-w-md">
 								{{-- title --}}
@@ -13,8 +13,13 @@
 								  placeholder="Votre contenu ...." rows="10">{{ old('content') }}</textarea>
 								<x-error-msg name="content" />
 								{{-- image  --}}
-								<input class="mt-5 block w-full rounded-lg border-gray-400" name="url_img" placeholder="Url de votre image"
-										type="text" value="https://source.unsplash.com/640x480/?animals?1">
+								<div class="">
+										<label for="">Choisir une image:</label>
+										<input class="block" id="" name="url_img" type="file">
+										<x-error-msg name="url_img" />
+								</div>
+								{{-- <input class="mt-5 block w-full rounded-lg border-gray-400" name="url_img" placeholder="Url de votre image"
+										type="text" value="https://source.unsplash.com/640x480/?animals?1"> --}}
 								<button class="btn-primary btn mt-6 w-full" type="submit">Envoyer</button>
 						</div>
 

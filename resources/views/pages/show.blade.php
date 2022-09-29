@@ -4,10 +4,12 @@
 				<div class="">
 						<p class="py-8 text-3xl font-black">{{ $post->title }}</p>
 						<p>{!! nl2br(e($post->content)) !!}</p>
-						<div class="pt-6">
-								<x-btn-delete :post="$post" />
-								<a class="btn-success btn" href="{{ $post->id }}/edit">Modifier</a>
-						</div>
+						@auth
+								<div class="pt-6">
+										<x-btn-delete :post="$post" />
+										<a class="btn-success btn" href="{{ $post->id }}/edit">Modifier</a>
+								</div>
+						@endauth
 				</div>
 		</div>
 </x-layouts.main-layout>

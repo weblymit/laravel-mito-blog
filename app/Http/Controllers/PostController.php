@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePostRequest;
-use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
+use App\Http\Requests\StorePostRequest;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\UpdatePostRequest;
 
 class PostController extends Controller
 {
@@ -94,20 +95,33 @@ class PostController extends Controller
    */
   public function update(UpdatePostRequest $request, Post $post)
   {
+    // verify is_published
     $published = 0;
     if ($request->has('is_published')) {
       $published = 1;
     }
 
+    // verify if file exist
+    // if file exist delete previous img
+    if ($request->hasFile('url_img')) {
+      // delete previous image
+      Storage::delete($post->url_img);
+      // store the new image
+      $post->url_img = $request->file('url_img')->store('posts');
+    }
+
+
+
     $request->validate([
       'title' => 'required|min:5|string|max:180',
-      'content' => 'required|min:20|max:350|string'
+      'content' => 'required|min:20|max:350|string',
+      'url_img' => 'required|image|mimes:png,jpg,jpeg|max:2000'
     ]);
 
     $post->update([
       'title' => $request->title,
       'content' => $request->content,
-      'url_img' => $request->url_img,
+      'url_img' => $post->url_img,
       'is_published' => $published,
       'updated_at' => now()
     ]);

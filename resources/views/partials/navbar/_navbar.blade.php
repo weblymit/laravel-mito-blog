@@ -14,6 +14,7 @@ $styleLink = 'hover:text-blue-600 hover:underline underline-offset-4';
 								<a class="{{ $styleLink }}" href="{{ route('register') }}">Inscription</a>
 						@endguest
 						@auth
+								<a class="{{ $styleLink }}" href="{{ route('dashboard') }}">Dashboard</a>
 								<x-btn-logout />
 								<span>hello, {{ Auth::user()->name }}</span>
 						@endauth

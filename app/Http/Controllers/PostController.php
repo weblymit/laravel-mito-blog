@@ -115,12 +115,10 @@ class PostController extends Controller
       $post->url_img = $request->file('url_img')->store('posts');
     }
 
-
-
     $request->validate([
       'title' => 'required|min:5|string|max:180',
       'content' => 'required|min:20|max:350|string',
-      'url_img' => 'required|image|mimes:png,jpg,jpeg|max:2000'
+      'url_img' => 'required|sometimes'
     ]);
 
     $post->update([

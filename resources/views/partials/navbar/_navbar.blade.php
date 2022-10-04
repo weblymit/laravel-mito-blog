@@ -5,7 +5,7 @@ $styleLink = 'hover:text-blue-600 hover:underline underline-offset-4';
 		<div class="container flex items-center justify-between">
 				<div class="" id="logo">
 						<a class="font-semibold uppercase text-blue-500" href="/">
-								MitoBlog
+								Tchoupi<span class="text-red-500">Blog</span>
 						</a>
 				</div>
 				<div class="flex items-center space-x-5 font-semibold uppercase" id="navitem">

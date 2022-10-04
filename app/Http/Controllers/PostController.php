@@ -50,7 +50,7 @@ class PostController extends Controller
     // dd($request->file('url_img'));
     $request->validate([
       'title' => 'required|min:5|string|max:180|unique:posts,title',
-      'content' => 'required|min:20|max:350|string',
+      'content' => 'required|min:20|max:2000|string',
       'url_img' => 'required|image|mimes:png,jpg,jpeg|max:2000'
     ]);
 
@@ -117,7 +117,7 @@ class PostController extends Controller
 
     $request->validate([
       'title' => 'required|min:5|string|max:180',
-      'content' => 'required|min:20|max:350|string',
+      'content' => 'required|min:20|max:2000|string',
       'url_img' => 'required|sometimes'
     ]);
 

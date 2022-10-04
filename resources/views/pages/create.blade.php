@@ -14,12 +14,10 @@
 								<x-error-msg name="content" />
 								{{-- image  --}}
 								<div class="">
-										<label for="">Choisir une image:</label>
+										<label for="">Image vedette:</label>
 										<input class="block" id="" name="url_img" type="file">
 										<x-error-msg name="url_img" />
 								</div>
-								{{-- <input class="mt-5 block w-full rounded-lg border-gray-400" name="url_img" placeholder="Url de votre image"
-										type="text" value="https://source.unsplash.com/640x480/?animals?1"> --}}
 								<button class="btn-primary btn mt-6 w-full" type="submit">Envoyer</button>
 						</div>
 

@@ -13,10 +13,11 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('tests', function (Blueprint $table) {
+    Schema::create('featured_images', function (Blueprint $table) {
       $table->id();
-      $table->string('name');
-      $table->text('description');
+      $table->string('slug')->default('default.jpg');
+
+      $table->foreignId('post_id')->onDelete('cascade');
       $table->timestamps();
     });
   }
@@ -28,6 +29,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('tests');
+    Schema::dropIfExists('featured_images');
   }
 };

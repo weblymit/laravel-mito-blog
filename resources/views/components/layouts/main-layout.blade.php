@@ -15,6 +15,23 @@
 <body>
 		@include('partials.navbar._navbar')
 		@include('partials._session')
+
+		<div class="container breadcrumbs pt-7 text-sm">
+				<ul>
+						<li>
+								<a href="/">Accueil</a>
+						</li>
+						<?php $link = ''; ?>
+						@for ($i = 1; $i <= count(Request::segments()); $i++)
+								@if (($i < count(Request::segments())) & ($i > 0))
+										<?php $link .= '/' . Request::segment($i); ?>
+										<li><a href="<?= $link ?>">{{ ucwords(str_replace('-', ' ', Request::segment($i))) }}</a> </li>
+								@else
+										<li class="text-blue-500">{{ ucwords(str_replace('-', ' ', Request::segment($i))) }}</li>
+								@endif
+						@endfor
+				</ul>
+		</div>
 		{{ $slot }}
 
 		@vite('resources/js/app.js')

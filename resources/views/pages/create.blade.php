@@ -18,6 +18,12 @@
 										<input class="block" id="" name="url_img" type="file">
 										<x-error-msg name="url_img" />
 								</div>
+								{{-- Other images  --}}
+								<div class="">
+										<label for="">Other images:</label>
+										<input class="block" id="" multiple name="images[]" type="file">
+										<x-error-msg name="images" />
+								</div>
 								<button class="btn-primary btn mt-6 w-full" type="submit">Envoyer</button>
 						</div>
 

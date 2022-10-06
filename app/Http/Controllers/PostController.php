@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Images;
 
 class PostController extends Controller
 {
@@ -47,7 +48,7 @@ class PostController extends Controller
   public function store(StorePostRequest $request)
   {
     // dd($request->all());
-    // dd($request->file('url_img'));
+    // dd($request->file('images'));
     $request->validate([
       'title' => 'required|min:5|string|max:180|unique:posts,title',
       'content' => 'required|min:20|max:2000|string',
@@ -56,12 +57,34 @@ class PostController extends Controller
 
     $validateImg = $request->file('url_img')->store('posts');
 
-    Post::create([
+    $new_post = Post::create([
       'title' => $request->title,
       'content' => $request->content,
       'url_img' => $validateImg,
       'created_at' => now()
     ]);
+
+    // 1-Verify if User select image or not
+    if ($request->has('images')) {
+      // 2-stock all images selected in array
+      $imagesSelected = $request->file('images');
+      // 3- loop storage each image
+      foreach ($imagesSelected as $image) {
+        // give a new name for each image
+        $image_name = md5(rand(1000, 10000)) . '.' . strtolower($image->extension());
+        // set the pathname
+        $path_upload = 'images/';
+        $image->move(public_path($path_upload), $image_name);
+
+        Images::create([
+          "slug" => $path_upload . $image_name, // posts/images/shhjhjshshshsjh.png
+          "created_at" => now(),
+          "post_id" => $new_post->id
+        ]);
+      }
+    }
+
+
 
     return redirect()
       ->route('home')
@@ -115,6 +138,26 @@ class PostController extends Controller
       $post->url_img = $request->file('url_img')->store('posts');
     }
 
+    // 1-Verify if User select image or not
+    if ($request->has('images')) {
+      // 2-stock all images selected in array
+      $imagesSelected = $request->file('images');
+      // 3- loop storage each image
+      foreach ($imagesSelected as $image) {
+        // give a new name for each image
+        $image_name = md5(rand(1000, 10000)) . '.' . strtolower($image->extension());
+        // set the pathname
+        $path_upload = 'images/';
+        $image->move(public_path($path_upload), $image_name);
+
+        Images::create([
+          "slug" => $path_upload . $image_name, // posts/images/shhjhjshshshsjh.png
+          "created_at" => now(),
+          "post_id" => $post->id
+        ]);
+      }
+    }
+
     $request->validate([
       'title' => 'required|min:5|string|max:180',
       'content' => 'required|min:20|max:2000|string',
@@ -152,5 +195,24 @@ class PostController extends Controller
   {
     $posts = Post::orderBy('updated_at', 'DESC')->paginate(5);
     return view('pages.all-posts', compact('posts'));
+  }
+
+  public function removeImage($id)
+  {
+    // 1- find the good image with the good id
+    $image = Images::find($id);
+
+    // 2- Verify image exist
+    if (!$image) {
+      abort(404);
+    }
+
+    // 3- delete image in actually folder
+    unlink(public_path($image->slug)); // public/images/img/jdkhdbhkdjbhdhdbhjdbdhjhbd.jpg
+    //  4- delete image from DB
+    $image->delete();
+
+    // 5- redirect to the post
+    return back()->with('status', "l'image a bien été supprimé");
   }
 }

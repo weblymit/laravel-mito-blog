@@ -40,4 +40,51 @@ class ListOfCategoryController extends Controller
     // 4- redirect
     return back()->with('status', 'Category added');
   }
+
+  /**
+   * Delete category
+   *
+   * @param [int] $id
+   * @return void
+   */
+  public function delete($id)
+  {
+    $category = ListOfCategory::find($id);
+
+    if (!$category) {
+      abort(404);
+    }
+    $category->delete();
+
+    return back()->with('status', 'Category delete');
+  }
+
+  /**
+   * Send the view to edit form with the good category
+   *
+   * @param [int] $id
+   * @return void
+   */
+  public function edit($id)
+  {
+    $category = ListOfCategory::find($id);
+    return view('pages.update-category', compact('category'));
+  }
+
+  /**
+   * Update the current category and store in DB
+   *
+   * @param Request $request
+   * @param [int] $id
+   * @return void
+   */
+  public function update(Request $request, $id)
+  {
+    $category = ListOfCategory::find($id);
+
+    // 1- Validate form with validate() method
+    $request->validate([
+      'category' => 'required|string|max:20|min:1'
+    ]);
+  }
 }

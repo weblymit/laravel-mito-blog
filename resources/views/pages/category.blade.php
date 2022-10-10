@@ -16,8 +16,8 @@
 								<div class="flex items-center space-x-4 border-b py-3">
 										<p class="font-bold uppercase">{{ $category->category }}</p>
 										<div class="">
-												<a class="btn-success btn-sm btn" href="">modifier</a>
-												<a class="btn-error btn-sm btn" href="">delete</a>
+												<a class="btn-success btn-sm btn" href="{{ route('category.edit', $category->id) }}">modifier</a>
+												<x-link-delete :itemId="$category->id" linkName="supprimer" routeName="category.delete" />
 										</div>
 								</div>
 						@empty

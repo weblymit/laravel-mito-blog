@@ -84,8 +84,6 @@ class PostController extends Controller
       }
     }
 
-
-
     return redirect()
       ->route('home')
       ->with('status', 'Le post a bien été ajouté');

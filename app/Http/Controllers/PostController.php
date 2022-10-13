@@ -6,7 +6,9 @@ use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Category;
 use App\Models\Images;
+use App\Models\ListOfCategory;
 
 class PostController extends Controller
 {
@@ -36,7 +38,8 @@ class PostController extends Controller
    */
   public function create()
   {
-    return view('pages.create');
+    $categories = ListOfCategory::all();
+    return view('pages.create', compact('categories'));
   }
 
   /**
@@ -52,7 +55,8 @@ class PostController extends Controller
     $request->validate([
       'title' => 'required|min:5|string|max:180|unique:posts,title',
       'content' => 'required|min:20|max:2000|string',
-      'url_img' => 'required|image|mimes:png,jpg,jpeg|max:2000'
+      'url_img' => 'required|image|mimes:png,jpg,jpeg|max:2000',
+      'category' => 'required'
     ]);
 
     $validateImg = $request->file('url_img')->store('posts');
@@ -84,6 +88,12 @@ class PostController extends Controller
       }
     }
 
+    Category::create([
+      'name' => $request->category,
+      'post_id' => $new_post->id,
+      'created_at' => now()
+    ]);
+
     return redirect()
       ->route('home')
       ->with('status', 'Le post a bien été ajouté');
@@ -97,6 +107,7 @@ class PostController extends Controller
    */
   public function show(Post $post)
   {
+    dd($post);
     return view('pages.show', compact('post'));
   }
 

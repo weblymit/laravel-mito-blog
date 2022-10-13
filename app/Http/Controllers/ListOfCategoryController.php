@@ -80,11 +80,20 @@ class ListOfCategoryController extends Controller
    */
   public function update(Request $request, $id)
   {
+    // 1 get the good category with id
     $category = ListOfCategory::find($id);
 
-    // 1- Validate form with validate() method
+    // 2- Validate form with validate() method
     $request->validate([
       'category' => 'required|string|max:20|min:1'
     ]);
+
+    // 3- Update in DB
+    $category->update([
+      'category' => $request->category,
+      'updated_at' => now(),
+    ]);
+
+    return redirect()->route('categories.home')->with('status', "Category update");
   }
 }

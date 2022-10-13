@@ -4,7 +4,9 @@ namespace App\Models;
 
 use App\Models\Images;
 use App\Models\Comment;
+use App\Models\Category;
 use App\Models\FeaturedImage;
+use App\Models\ListOfCategory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -26,5 +28,13 @@ class Post extends Model
   public function featuredImage()
   {
     return $this->hasOne(FeaturedImage::class);
+  }
+
+  /**
+   * Get the category associated with the post.
+   */
+  public function category()
+  {
+    return $this->hasOne(Category::class);
   }
 }

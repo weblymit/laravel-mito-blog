@@ -20,7 +20,7 @@ class PostFactory extends Factory
       'title' => fake()->sentence(),
       'content' => fake()->paragraph(8),
       'url_img' => fake()->imageUrl(640, 480, 'animals', true),
-      'created_at' => now()
+      'created_at' => now(),
     ];
   }
 }
